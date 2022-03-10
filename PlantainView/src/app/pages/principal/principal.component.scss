@@ -1,0 +1,38 @@
+
+mat-grid-tile {
+  background: rgba(196, 201, 196, 0.3);
+  box-shadow: 1px 0px 20px rgba(63, 63, 63, 0.1);
+  border-radius: 10px ;
+  color: black;
+}
+
+mat-grid-list{
+  margin: 20px 20px 20px 20px;
+}
+
+.text--form{
+  font-size: x-large;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+span {
+  font-weight: bold;
+  color: #37b337;
+}
+
+p {
+  font-size: medium;
+}
+
+.field{
+  color: black;
+  margin: 10px 10px 10px 10px;
+}
+
+.text--response{
+  display: flex;
+  align-items: center;
+  font-size: large ;
+}

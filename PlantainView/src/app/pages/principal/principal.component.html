@@ -1,0 +1,86 @@
+<mat-toolbar>
+  <span>Sistema de recomendación</span>
+</mat-toolbar>
+
+
+<mat-grid-list cols="4" rowHeight="500px" [gutterSize]="'30px'">
+  <mat-grid-tile style="margin-right: 20px;" [colspan]="2" >
+    <div style="margin: 10px 10px 10px 10px">
+      <span class="text--form">Ingreso del cultivo </span>
+      <p>A través del ingeso de los datos del cultivo se puede conocer si este es propicio para el cultivo de plátano y su similitud con suelos enfocados al cultvio de plátano</p>
+      <form [formGroup]="cropToRecommender" (submit)="sendCrop()">
+
+        <mat-form-field class="field" appearance="fill">
+          <mat-label>Fosforo</mat-label>
+          <input matInput formControlName="fosforo">
+          <span matSuffix>mg/kg</span>
+          <mat-error *ngIf="cropToRecommender.get('fosforo')?.hasError('required') && cropToRecommender.get('fosforo')?.touched">
+            Ingrese el fosforo del terreno
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field  class="field" appearance="fill">
+          <mat-label>Aluminio</mat-label>
+          <input matInput formControlName="aluminio">
+          <span matSuffix>cmol(+)/kg</span>
+          <mat-error *ngIf="cropToRecommender.get('aluminio')?.hasError('required') && cropToRecommender.get('aluminio')?.touched">
+            Ingrese el aluminio del terreno
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field"  appearance="fill">
+          <mat-label>Calcio</mat-label>
+          <input matInput formControlName="calcio">
+          <span matSuffix>cmol(+)/kg</span>
+          <mat-error *ngIf="cropToRecommender.get('calcio')?.hasError('required') && cropToRecommender.get('calcio')?.touched">
+            Ingrese el calcio del terreno
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field"  appearance="fill">
+          <mat-label>Potasio</mat-label>
+          <input matInput formControlName="potasio">
+          <span matSuffix>cmol(+)/kg</span>
+          <mat-error *ngIf="cropToRecommender.get('fosforo')?.hasError('required') && cropToRecommender.get('potasio')?.touched">
+            Ingrese el potasio del terreno
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field"  appearance="fill">
+          <mat-label>sodio</mat-label>
+          <input matInput formControlName="sodio">
+          <span matSuffix>cmol(+)/kg</span>
+          <mat-error *ngIf="cropToRecommender.get('sodio')?.hasError('required') && cropToRecommender.get('sodio')?.touched">
+            Ingrese el sodio del terreno
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="field"  appearance="fill">
+          <mat-label>zinc</mat-label>
+          <input matInput formControlName="zinc">
+          <span matSuffix>mg/kg</span>
+          <mat-error *ngIf="cropToRecommender.get('zinc')?.hasError('required') && cropToRecommender.get('zinc')?.touched">
+            Ingrese el zinc del terreno
+          </mat-error>
+        </mat-form-field>
+
+        <button style="margin-left: 10px;" mat-raised-button color="primary" type="submit" [disabled]="cropToRecommender.invalid">Ingresar</button>
+
+      </form>
+    </div>
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="2">
+
+    <div class="text--response" *ngIf="similarity;else noSimilarity">
+      <span>El cultivo ingresado es propicio para la siembra de plátano</span>
+      <p> Tiene una similitud del {{similarity}} % con parcelas  usadas para el cultivo de plátano</p>
+    </div>
+
+    <ng-template #noSimilarity>
+      <span style="font-size: large;">En este lugar aparecera la cercania que tiene la parcela para poder cultivar plátano</span>
+    </ng-template>
+
+
+  </mat-grid-tile>
+</mat-grid-list>
