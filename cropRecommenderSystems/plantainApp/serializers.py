@@ -1,6 +1,6 @@
 
 from dataclasses import fields
-from plantainApp.models import crops, userCrops
+from plantainApp.models import crops, userCrops, User
 from rest_framework import serializers
 
 class cropsSerializer(serializers.HyperlinkedModelSerializer):
@@ -14,7 +14,7 @@ class userCropsSerializer(serializers.HyperlinkedModelSerializer):
         model = userCrops
         fields = ['fosforo', 'aluminio', 'calcio', 'potasio', 'sodio', 'zinc', 'pearson', 'isUsefulForPlantain']
 
-class userPearson(serializers.HyperlinkedModelSerializer):
+class userSearializer(serializers.HyperlinkedModelSerializer):
     class Meta:
-        model = userCrops
-        fields = ['pearson']
+        model = User
+        fields = ['user', 'password']

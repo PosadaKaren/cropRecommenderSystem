@@ -1,0 +1,48 @@
+.background--login{
+  margin-right: 20px;
+  background-image: url(./../../../assets/images/background.png);
+  background-size: 1000px;
+}
+
+.login--form{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-weight: bold;
+}
+
+.login--form--box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  height: 450px;
+  background-color: whitesmoke;
+}
+
+.mat-form-field{
+  margin: 20px 40px 20px 40px;
+  color: #37b337;
+}
+
+.mat-form-field{
+  width:250px !important;
+}
+
+.login--form--button{
+  display: flex;
+  justify-content: center;
+}
+
+.logo--img{
+  width: 200px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+}
+
+span{
+  color: #37b337
+}

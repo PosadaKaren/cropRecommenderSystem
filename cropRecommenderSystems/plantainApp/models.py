@@ -9,6 +9,11 @@ class crops(models.Model):
    zinc = models.FloatField(max_length=10)
    pearson = models.FloatField(max_length=10)
 
+class User(models.Model):
+   user_id = models.AutoField(primary_key=True)
+   usuario = models.TextField(max_length=20)
+   contraseña = models.TextField(max_length=20)
+
 
 class userCrops(models.Model):
    userCrop_id = models.AutoField(primary_key=True)
@@ -20,3 +25,5 @@ class userCrops(models.Model):
    zinc = models.FloatField(max_length=10)
    pearson = models.FloatField(max_length=10)
    isUsefulForPlantain = models.FloatField(max_length=10, blank=True)
+   user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+

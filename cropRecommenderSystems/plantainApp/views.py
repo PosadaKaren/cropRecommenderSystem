@@ -3,8 +3,8 @@ from django import http
 from django.shortcuts import render
 from django.views import View
 from plantainApp.utils import concat, correlation,  todf, fromquerytocrop, fromjsontocrop, mean
-from plantainApp.models import crops, userCrops
-from plantainApp.serializers import cropsSerializer, userCropsSerializer
+from plantainApp.models import crops, User
+from plantainApp.serializers import cropsSerializer, userSearializer
 from plantainApp.utils import normalize
 from rest_framework import viewsets
 from django.http import HttpResponse, JsonResponse
@@ -16,7 +16,9 @@ class cropViewSet(viewsets.ModelViewSet):
     queryset = crops.objects.all()
     serializer_class = cropsSerializer
 
-        
+class userViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = userSearializer  
 
 class userCropsViewSet(View):
     

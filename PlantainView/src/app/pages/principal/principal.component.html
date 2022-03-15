@@ -3,12 +3,20 @@
 </mat-toolbar>
 
 
-<mat-grid-list cols="4" rowHeight="500px" [gutterSize]="'30px'">
+<mat-grid-list cols="4" rowHeight="600px" [gutterSize]="'30px'">
   <mat-grid-tile style="margin-right: 20px;" [colspan]="2" >
     <div style="margin: 10px 10px 10px 10px">
       <span class="text--form">Ingreso del cultivo </span>
       <p>A través del ingeso de los datos del cultivo se puede conocer si este es propicio para el cultivo de plátano y su similitud con suelos enfocados al cultvio de plátano</p>
       <form [formGroup]="cropToRecommender" (submit)="sendCrop()">
+
+        <mat-form-field class="field" appearance="fill">
+          <mat-label>pH</mat-label>
+          <input matInput formControlName="ph">
+          <mat-error *ngIf="cropToRecommender.get('ph')?.hasError('required') && cropToRecommender.get('ph')?.touched">
+            Ingrese el pH del terreno
+          </mat-error>
+        </mat-form-field>
 
         <mat-form-field class="field" appearance="fill">
           <mat-label>Fosforo</mat-label>
@@ -73,14 +81,43 @@
   <mat-grid-tile [colspan]="2">
 
     <div class="text--response" *ngIf="similarity;else noSimilarity">
-      <span>El cultivo ingresado es propicio para la siembra de plátano</span>
-      <p> Tiene una similitud del {{similarity}} % con parcelas  usadas para el cultivo de plátano</p>
+      <div>
+        <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+          <img src="./../../../assets/images/logo.png" class="logo--img">
+        </div>
+
+        <div style="margin-top: 5px;">
+          <span>El terreno tiene la siguiente similitud {{similarity}} % con los requerimientos edáficos del plátano </span>
+
+          <div style="margin-top: 5px;display: flex; justify-content: center;">
+            <div *ngIf="isPosible; else noPosible" >
+              <span style="color: #37b337;">El terreno es propicio para cultivar plátano </span>
+            </div>
+
+            <ng-template #noPosible>
+              <span style="color: red">El terreno no es propicio para cultivar plátano </span>
+            </ng-template>
+          </div>
+        </div>
+
+      </div>
     </div>
 
     <ng-template #noSimilarity>
-      <span style="font-size: large;">En este lugar aparecera la cercania que tiene la parcela para poder cultivar plátano</span>
+      <div>
+        <div style="display: flex; justify-content: center;">
+          <img src="./../../../assets/images/logo.png" class="logo--img">
+        </div>
+        <div style="margin-top: 5px;">
+          <span style="font-weight: bold;">En este lugar se presentará la información sobre la similtud del terreno con los requerimientos edáficos del plátano</span>
+        </div>
+      </div>
     </ng-template>
 
 
   </mat-grid-tile>
 </mat-grid-list>
+
+<footer style="display: flex; justify-content: center;" >
+  <span style="color: gray;">Sistema de recomendación para el cultivo de plátano  - V1</span>
+</footer>

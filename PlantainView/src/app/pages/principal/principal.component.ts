@@ -12,11 +12,13 @@ import { ServiceService } from 'src/app/service/service.service';
 export class PrincipalComponent implements OnInit {
 
 
-  similarity : string = '';
+  similarity : string = ''
+  isPosible : boolean = false;
   cropToRecommender : FormGroup;
 
   constructor(private fb : FormBuilder, private cropService : ServiceService, private _snackBar : MatSnackBar ) {
     this.cropToRecommender = fb.group({
+      ph : ['', Validators.required],
       fosforo : ['', Validators.required],
       aluminio : ['', Validators.required],
       calcio : ['', Validators.required],
@@ -40,10 +42,22 @@ export class PrincipalComponent implements OnInit {
     this.cropService.postCropUser(cropTosend)
     .subscribe((data) => {
       this._snackBar.open('el cultivo se proceso correctamente', 'Ok', {duration : 2000, panelClass: ['green-plantain']})
-      this.similarity = data.similarity
+      const number = data.similarity
+      console.log(number)
+      console.log(number.toFixed(4))
+      let simStrig = number.toFixed(4).toString()
+      this.similarity = simStrig;
     }, (err) => {
       this._snackBar.open('Al parecer ocurrio un problema', 'Ok', {duration : 2000, panelClass: ['red-warning']})
     })
+  }
+
+  posibility(similarity : number){
+    if(similarity > 0.89){
+      this.isPosible = true
+    } else {
+      this.isPosible= false
+    }
   }
 
 }
