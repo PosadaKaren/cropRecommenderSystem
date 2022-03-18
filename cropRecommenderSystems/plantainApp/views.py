@@ -2,15 +2,16 @@ import json
 from django import http
 from django.shortcuts import render
 from django.views import View
-from plantainApp.utils import concat, correlation,  todf, fromquerytocrop, fromjsontocrop, mean
-from plantainApp.models import crops, User
-from plantainApp.serializers import cropsSerializer, userSearializer
+from plantainApp.utils import concat, correlation,  todf, fromquerytocrop, fromjsontocrop, mean, type, maxelements, datatolist
+from plantainApp.models import crops, User, PlantainTypes
+from plantainApp.serializers import cropsSerializer, userSearializer, PlantainTypeSerializer
 from plantainApp.utils import normalize
 from rest_framework import viewsets
 from django.http import HttpResponse, JsonResponse
 from rest_framework.decorators import action
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
+import pandas as pd
 
 class cropViewSet(viewsets.ModelViewSet):
     queryset = crops.objects.all()
@@ -19,6 +20,10 @@ class cropViewSet(viewsets.ModelViewSet):
 class userViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = userSearializer  
+
+class plantainViewSet(viewsets.ModelViewSet):
+    queryset = PlantainTypes.objects.all()
+    serializer_class = PlantainTypeSerializer 
 
 class userCropsViewSet(View):
     
@@ -29,14 +34,26 @@ class userCropsViewSet(View):
     def post(self, request):
         userCrop = json.loads(request.body)
         userCrop = fromjsontocrop(userCrop)
-        #userCrop = normalize(userCrop)
+
         cropslist = crops.objects.values()
         cropslist = fromquerytocrop(cropslist)
         document = userCrop.append(cropslist, ignore_index=True)
-        document = normalize(document)
-        print(document)
-        pearson = correlation(document)
-        print(pearson)
+
+        pearson = correlation(document, 3)
+        
+        top = maxelements(pearson,5)
         similarity = mean(pearson) * 100
-        print(similarity)
-        return JsonResponse({'similarity' : similarity})
+
+        documentp = pd.DataFrame()
+        documentp = document
+        documentp['pearson'] = pearson2 = correlation(document, 3)
+    
+        docmax = pd.DataFrame()
+        docmax = documentp
+        docmax = (documentp[documentp.pearson >= min(top)])
+
+        doctypes = type(userCrop)
+        print(doctypes)
+        
+
+        return JsonResponse({'similarity' : similarity, 'pearson' : pearson2, 'type' : doctypes, 'document' : docmax.values.tolist() })

@@ -87,11 +87,23 @@
         </div>
 
         <div style="margin-top: 5px;">
-          <span>El terreno tiene la siguiente similitud {{similarity}} % con los requerimientos edáficos del plátano </span>
+          <span>El terreno tiene una similitud del {{similarity}} % con los requerimientos edáficos del plátano </span>
 
           <div style="margin-top: 5px;display: flex; justify-content: center;">
             <div *ngIf="isPosible; else noPosible" >
-              <span style="color: #37b337;">El terreno es propicio para cultivar plátano </span>
+              <span style="color: #37b337; margin-top: 5px; margin-bottom: 5px;">por lo tanto, el terreno es adeacuado para el cultivo de plátano </span>
+
+              <div style="margin: 20px 20px 20px 20px;">
+                <span>Los terrenos más similares de acuerdo al sistema de recomendación son los siguientes : </span>
+                <div *ngFor="let crops of mostSimilarCrops">
+                  <p style="margin-top: 3px; font-size: small; color: gray; font-style: italic;"> * Fosforo : {{crops.fosforo}} - Aluminio : {{crops.aluminio}} - Calcio : {{crops.calcio}} - Potasio : {{crops.potasio}} - Sodio : {{crops.sodio}}  - Zinc : {{crops.zinc}} </p>
+                </div>
+              </div>
+
+              <div style="margin: 20px 20px 20px 20px; float: right;">
+                <span style="color: #37b337;">El tipo recomendado de plátano es : {{recomendedType}}</span>
+              </div>
+
             </div>
 
             <ng-template #noPosible>

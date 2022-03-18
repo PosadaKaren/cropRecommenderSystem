@@ -1,3 +1,4 @@
+from asyncio.proactor_events import _ProactorBasePipeTransport
 from django.db import models
 
 class crops(models.Model):
@@ -27,3 +28,12 @@ class userCrops(models.Model):
    isUsefulForPlantain = models.FloatField(max_length=10, blank=True)
    user = models.ForeignKey(User, on_delete=models.DO_NOTHING)
 
+class PlantainTypes(models.Model):
+   types_id = models.AutoField(primary_key=True)
+   nombre = models.TextField()
+   phMin = models.FloatField(max_length=3,blank=True)
+   phMax = models.FloatField(max_length=3,blank=True)
+   nitrogeno = models.FloatField(max_length=10)
+   fosforo = models.FloatField(max_length=10)
+   potasio = models.FloatField(max_length=10)
+   calcio = models.FloatField(max_length=10)

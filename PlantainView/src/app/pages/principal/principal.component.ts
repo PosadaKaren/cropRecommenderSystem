@@ -13,7 +13,9 @@ export class PrincipalComponent implements OnInit {
 
 
   similarity : string = ''
+  recomendedType : string = ''
   isPosible : boolean = false;
+  mostSimilarCrops : any[] = [];
   cropToRecommender : FormGroup;
 
   constructor(private fb : FormBuilder, private cropService : ServiceService, private _snackBar : MatSnackBar ) {
@@ -32,28 +34,34 @@ export class PrincipalComponent implements OnInit {
 
   sendCrop(){
     const cropTosend = {
-      fosforo : this.cropToRecommender.value.fosforo,
-      aluminio : this.cropToRecommender.value.aluminio,
-      calcio : this.cropToRecommender.value.calcio,
-      potasio : this.cropToRecommender.value.potasio,
-      sodio : this.cropToRecommender.value.sodio,
-      zinc : this.cropToRecommender.value.zinc
+      fosforo : parseFloat(this.cropToRecommender.value.fosforo),
+      aluminio : parseFloat(this.cropToRecommender.value.aluminio),
+      calcio : parseFloat(this.cropToRecommender.value.calcio),
+      potasio : parseFloat(this.cropToRecommender.value.potasio),
+      sodio : parseFloat(this.cropToRecommender.value.sodio),
+      zinc : parseFloat(this.cropToRecommender.value.zinc)
     }
     this.cropService.postCropUser(cropTosend)
     .subscribe((data) => {
+      this.mostSimilarCrops = this.cropService.createListObj(data.document)
+
       this._snackBar.open('el cultivo se proceso correctamente', 'Ok', {duration : 2000, panelClass: ['green-plantain']})
       const number = data.similarity
-      console.log(number)
-      console.log(number.toFixed(4))
+
       let simStrig = number.toFixed(4).toString()
       this.similarity = simStrig;
+      this.posibility(this.similarity);
+      this.recomendedType = this.cropService.type(data.type)
+
     }, (err) => {
       this._snackBar.open('Al parecer ocurrio un problema', 'Ok', {duration : 2000, panelClass: ['red-warning']})
     })
   }
 
-  posibility(similarity : number){
-    if(similarity > 0.89){
+  posibility(similarity : string){
+    const sim = parseInt(similarity)
+    console.log(sim)
+    if(sim > 0.6){
       this.isPosible = true
     } else {
       this.isPosible= false
